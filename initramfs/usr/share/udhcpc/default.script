@@ -1,0 +1,10 @@
+#!/bin/sh
+[ -z "$1" ] && echo "Error: should be called from udhcpc" && exit 1
+case "$1" in
+    bound|renew)
+        ifconfig $interface $ip netmask $subnet
+        route add default gw $router $interface
+        echo "nameserver $dns" > /etc/resolv.conf
+        ;;
+esac
+exit 0

@@ -1,0 +1,8 @@
+# 1. Ignore the massive Linux source directory contents
+Tkernel/linux-6.18.26/**/*
+
+# 2. Allow ONLY the path to the bzImage
+!Tkernel/linux-6.18.26/arch/
+!Tkernel/linux-6.18.26/arch/x86/
+!Tkernel/linux-6.18.26/arch/x86/boot/
+!Tkernel/linux-6.18.26/arch/x86/boot/bzImage

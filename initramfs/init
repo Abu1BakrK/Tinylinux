@@ -1,0 +1,37 @@
+#!/bin/busybox sh
+
+# 1. Create the shortcuts first
+/bin/busybox --install -s
+
+# 2. Setup the hardware files
+mkdir -p /dev /proc /sys /home
+mount -t devtmpfs devtmpfs /dev
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+
+# 2. THE SMART LOOP: Find the right house
+echo "Searching for persistent partition..."
+sleep 3
+for drive in /dev/sd[a-z][0-9]; do
+    mount $drive /home >/dev/null 2>&1
+    if [ -f /home/.this_is_tinylinux ]; then
+        break
+    else
+        umount /home >/dev/null 2>&1
+        echo "Error finding the drive fix this garbage."
+    fi
+done
+
+# 4. Identity and Location
+# We tell the system that /home is our official workspace
+export HOME=/home
+cd /home
+
+# 5. Welcome Message
+echo "=================================="
+echo "      WELCOME TO TINYLINUX        "
+echo "          Core  0.2.06            "  # Change version number to correct one
+echo "=================================="
+
+# 6. Start the shell on the PHYSICAL SCREEN (tty1)
+exec setsid sh -c 'exec sh </dev/tty1 >/dev/tty1 2>&1'
