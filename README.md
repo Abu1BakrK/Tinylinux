@@ -1,1 +1,1 @@
-A tiny os running linux all from a sub
+A tiny os running linux all from a usb
